@@ -1,6 +1,11 @@
 sepa_dd (org.project60.sepa) release history
 ============================================
 
+Version 0.4.1
+=============
+- FIX: Don't use '_' in group names, conflicts with PAIN specs
+
+
 
 Version 0.4
 ===========
