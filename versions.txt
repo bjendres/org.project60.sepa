@@ -3,8 +3,9 @@ sepa_dd (org.project60.sepa) release history
 
 Version 0.4.1
 =============
+- FIX: Copy source when cloning mandates (https://github.com/Project60/sepa_dd/issues/130)
+- FIX: Don't overwrite validation date (https://github.com/Project60/sepa_dd/issues/120)
 - FIX: Don't use '_' in group names, conflicts with PAIN specs
-
 
 
 Version 0.4
