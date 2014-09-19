@@ -93,7 +93,9 @@
       {else}
         <a href="{crmURL p="civicrm/sepa/xml" q="id=$file_id"}" download="{$group.file}.xml" class="button button_export">{ts}Download Again{/ts}</a>
         {if $closed_status_id eq $group.status_id}
-        <a onClick="mark_received({$group_id});" class="button button_export">{ts}Mark Received{/ts}</a>
+          {if $group.collection_date|strtotime lt $smarty.now}
+            <a onClick="mark_received({$group_id});" class="button button_export">{ts}Mark Received{/ts}</a>
+          {/if}
         {/if}
       {/if}
       {if $can_delete eq yes}
@@ -123,6 +125,10 @@ function mark_received(group_id) {
       {success: function(data) {
         // reload page
         location.reload();     
+      },
+       error: function(data) {
+        // show error message
+        alert(data.error_message.error_message);
       }}
     );    
   }
