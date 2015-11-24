@@ -103,7 +103,7 @@ class CRM_Sepa_Logic_Batching {
     // RCUR-STEP 2: calculate next execution date
     $mandates_by_nextdate = array();
     foreach ($relevant_mandates as $mandate) {
-      $next_date = self::getNextExecutionDate($mandate, $now);
+      $next_date = self::getNextExecutionDate($mandate, $now, ($mode=='FRST'));
       if ($next_date==NULL) continue;
       if ($next_date > $latest_date) continue;
 
@@ -515,7 +515,7 @@ class CRM_Sepa_Logic_Batching {
   /**
    * Calculate the next execution date for a recurring contribution
    */
-  public static function getNextExecutionDate($rcontribution, $now) {
+  public static function getNextExecutionDate($rcontribution, $now, $FRST = FALSE) {
     $now =  strtotime(date('Y-m-d', $now));     // ignore time of day
     $cycle_day = $rcontribution['cycle_day'];
     $interval = $rcontribution['frequency_interval'];
@@ -528,10 +528,18 @@ class CRM_Sepa_Logic_Batching {
     if (isset($rcontribution['mandate_first_executed']) && strlen($rcontribution['mandate_first_executed'])>0) {
       $last_run = strtotime($rcontribution['mandate_first_executed']);
     }
-    
+
+    // for the FRST (first, start) contribution, only
+    //  advance monthly, see ticket #309
+    if ($FRST && ($unit=='month' || $unit=='year')) {
+      $search_step = "+1 month";
+    } else {
+      $search_step = "+$interval $unit";
+    }
+
     // take the first next_date that is in the future
     while ( ($next_date < $now) || ($next_date <= $last_run) ) {
-      $next_date = strtotime("+$interval $unit", $next_date);
+      $next_date = strtotime($search_step, $next_date);
     }
 
     // and check if it's not after the end_date
@@ -552,20 +560,20 @@ class CRM_Sepa_Logic_Batching {
    * For monthly payments, this would be the cycle day, 
    * while for annual payments this would be the cycle day and the month.
    */
-  public static function getCycleDay($rcontribution) {
+  public static function getCycleDay($rcontribution, $creditor_id) {
     $cycle_day = $rcontribution['cycle_day'];
     $interval  = $rcontribution['frequency_interval'];
     $unit      = $rcontribution['frequency_unit'];
     if ($unit == 'year' || ($unit == 'month' && !($interval % 12))) {
       // this is an annual payment      
-      $date = CRM_Sepa_Logic_Batching::getNextExecutionDate($rcontribution, strtotime('now'));
-      $date = strtotime($date);
-      return ts("%1%3 %2", array(
-        1 => date('j', $date),
-        2 => date('F', $date),
-        3 => date('S', $date),
-        ));
-
+      if (!empty($rcontribution['mandate_first_executed'])) {
+        $date = $rcontribution['mandate_first_executed'];
+      } else {
+        $rcur_notice = (int) CRM_Sepa_Logic_Settings::getSetting("batching.FRST.notice", $creditor_id);
+        $now = strtotime("now +$rcur_notice days");
+        $date = CRM_Sepa_Logic_Batching::getNextExecutionDate($rcontribution, $now, TRUE);
+      }
+      return CRM_Utils_Date::customFormat($date, ts("%B %E%f"));
     } elseif ($unit == 'week') {
       // FIXME: weekly not supported yet
       return '';
