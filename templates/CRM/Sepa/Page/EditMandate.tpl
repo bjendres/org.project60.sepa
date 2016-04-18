@@ -21,31 +21,17 @@
 <div class="crm-container">
     <div class="crm-block crm-content-block crm-sdd-mandate">
         <table class="crm-info-panel">
-            <tr><td class="label">{ts domain="org.project60.sepa"}Status{/ts}</td><td><b>
-            	{if $sepa.status eq 'INIT'}
-            		{ts domain="org.project60.sepa"}Not activated{/ts}
-            	{elseif $sepa.status eq 'FRST' or $sepa.status eq 'OOFF'}
-            		{ts domain="org.project60.sepa"}Ready{/ts}
-            	{elseif $sepa.status eq 'RCUR' or $sepa.status eq 'SENT'}
-            		{ts domain="org.project60.sepa"}In Use{/ts}
-            	{elseif $sepa.status eq 'COMPLETE'}
-            		{ts domain="org.project60.sepa"}Completed{/ts}
-            	{elseif $sepa.status eq 'INVALID'}
-            		{ts domain="org.project60.sepa"}Error{/ts}
-            	{elseif $sepa.status eq 'ONHOLD'}
-            		{ts domain="org.project60.sepa"}Suspended{/ts}
-            	{/if}
-            </b></td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Contact{/ts}</td><td><a href="{$contact1.link}"><div class="icon crm-icon {$contact1.contact_type}-icon"></div>{$contact1.display_name}</a></td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Reference{/ts}</td><td>{$sepa.reference}</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}IBAN{/ts}</td><td>{$sepa.iban}</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}BIC{/ts}</td><td>{$sepa.bic}</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Creditor{/ts}</td><td>{$sepa.creditor_name} [{$sepa.creditor_id}]</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Source{/ts}</td><td>{$sepa.source}</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Status{/ts}</td><td>{$sepa.status}</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Creation date{/ts}</td><td>{$sepa.creation_date}</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Signature date{/ts}</td><td>{$sepa.date}</td></tr>
-            <tr><td class="label">{ts domain="org.project60.sepa"}Validation date{/ts}</td><td>{$sepa.validation_date}</td></tr>
+            <tr><td class="label">{ts}Status{/ts}</td><td><b>{$sepa.status_text}</b> ({$sepa.status})</td></tr>
+            <tr><td class="label">{ts}Contact{/ts}</td><td><a href="{$contact1.link}"><div class="icon crm-icon {$contact1.contact_type}-icon"></div>{$contact1.display_name}</a></td></tr>
+            <tr><td class="label">{ts}Reference{/ts}</td><td>{$sepa.reference}</td></tr>
+            <tr><td class="label">{ts}IBAN{/ts}</td><td>{$sepa.iban}</td></tr>
+            <tr><td class="label">{ts}BIC{/ts}</td><td>{$sepa.bic}</td></tr>
+            <tr><td class="label">{ts}Creditor{/ts}</td><td>{$sepa.creditor_name} [{$sepa.creditor_id}]</td></tr>
+            <tr><td class="label">{ts}Source{/ts}</td><td>{$sepa.source}</td></tr>
+            <tr><td class="label">{ts}Status{/ts}</td><td>{$sepa.status}</td></tr>
+            <tr><td class="label">{ts}Creation date{/ts}</td><td>{$sepa.creation_date}</td></tr>
+            <tr><td class="label">{ts}Signature date{/ts}</td><td>{$sepa.date}</td></tr>
+            <tr><td class="label">{ts}Validation date{/ts}</td><td>{$sepa.validation_date}</td></tr>
         </table>
     </div>
 </div>
