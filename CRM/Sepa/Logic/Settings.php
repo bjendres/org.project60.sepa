@@ -242,4 +242,21 @@ class CRM_Sepa_Logic_Settings {
       return FALSE;
     }
   }
+
+  /**
+   * TODO
+   */
+  public static function isBicRequired($iban, $creditor_id) {
+    // TODO: Implement
+    return FALSE;
+  }
+
+  /**
+   * TODO
+   */
+  public static function getNoBicPlaceholder() {
+    // TODO: Implement
+    return 'NOTAVAIL'; // or : 'NOTPROVIDED'?
+  }
+
 }

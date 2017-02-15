@@ -66,11 +66,14 @@ class CRM_Sepa_BAO_SEPAMandate extends CRM_Sepa_DAO_SEPAMandate {
       if ($iban_error) throw new CRM_Exception($iban_error . ':' . $params['iban']);      
     }
     
-    if (!empty($params['bic'])) {
-      $bic_error = CRM_Sepa_Logic_Verification::verifyBIC($params['bic']);
-      if ($bic_error) throw new CRM_Exception($bic_error . ':' . $params['bic']);      
+    if (empty($params['bic'])) {
+      if (!CRM_Sepa_Logic_Settings::isBicRequired($params['iban'], $params['creditor_id'])) {
+        $params['bic'] = CRM_Sepa_Logic_Settings::getNoBicPlaceholder();
+      }
     }
 
+    $bic_error = CRM_Sepa_Logic_Verification::verifyBIC($params['bic']);
+    if ($bic_error) throw new CRM_Exception($bic_error . ':' . $params['bic']);
 
     // create the DAO object
     $dao = new CRM_Sepa_DAO_SEPAMandate();
