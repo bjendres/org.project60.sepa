@@ -14,7 +14,7 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-define('SDD_UPDATE_RUNNER_BATCH_SIZE', 250);
+define('SDD_UPDATE_RUNNER_BATCH_SIZE', 500);
 define('SDD_UPDATE_RUNNER_BATCH_LOCK_TIMOUT', 600);
 
 
