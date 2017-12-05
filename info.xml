@@ -9,7 +9,7 @@
     <email>endres@systopia.de</email>
   </maintainer>
   <releaseDate>2017-12-01</releaseDate>
-  <version>1.2.5+GP431+457+458+1294.alpha3</version>
+  <version>1.2.5+GP431.alpha4</version>
   <develStage>test</develStage>
   <compatibility>
     <ver>4.6</ver>
