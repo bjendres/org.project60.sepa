@@ -8,8 +8,8 @@
     <author>B. Endres</author>
     <email>endres@systopia.de</email>
   </maintainer>
-  <releaseDate>2017-12-01</releaseDate>
-  <version>1.2.5+GP431.alpha4</version>
+  <releaseDate>2017-12-11</releaseDate>
+  <version>1.2.5.GPbeta4+GP431</version>
   <develStage>test</develStage>
   <compatibility>
     <ver>4.6</ver>
